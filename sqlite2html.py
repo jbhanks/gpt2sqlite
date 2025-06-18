@@ -47,6 +47,7 @@ cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
 tables = [row["name"] for row in cursor.fetchall()]
 
 for table in tables:
+  try:
     cursor.execute(f"SELECT content, role, create_time, model_slug FROM {table}")
     rows = cursor.fetchall()
 
@@ -64,5 +65,7 @@ for table in tables:
     )
 
     (output_dir / f"{table}.html").write_text(html, encoding="utf-8")
+  except sqlite3.OperationalError:
+    continue
 
 print(f"✅ HTML files saved to {output_dir.resolve()}")
