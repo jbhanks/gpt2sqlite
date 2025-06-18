@@ -8,6 +8,9 @@ Usage: `sh json2sqlite.sh /path/to/OpenAI/conversations.json /path/to/create/dat
 
 In ChatGPT webUI, go to Settings > Data controls > Export data anc click "export", then check your email for a link to your data. When you dowload and unzip it, it should contain a `conversations.json` file.
 
+# Generate HTML files that include date and model:
+
+`python sqlite2html.py /path/to/create/database.sqlite /path/to/export/html/files/`
 
 ### Requirements:
 * jq
