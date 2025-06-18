@@ -76,6 +76,7 @@ html_template = Template("""
 <body>
   <h1>{{ title }}</h1>
   {% for block in content_blocks %}
+    <p><b>{{ block.role }}:</b></p>
     <div style="background-color: {{ block.bgcolor }}; padding: 1em; border-radius: 8px; margin-bottom: 2em;">
       <p>{{ block.content | safe }}</p>
       <sub>{{ block.create_time }} · {{ block.model_slug }}</sub>
@@ -112,7 +113,7 @@ for slug in sorted(model_slugs):  # deterministic
 # -- Process each table --
 for table in tables:
   try:
-    cursor.execute(f"SELECT content, create_time, model_slug FROM {table}")
+    cursor.execute(f"SELECT content, role, create_time, model_slug FROM {table}")
     rows = cursor.fetchall()
     content_blocks = []
     for row in rows:
@@ -122,6 +123,7 @@ for table in tables:
         color = model_slug_colors.get(row["model_slug"], "#ffffff")
         content_blocks.append({
             "content": content,
+            "role": row["role"],
             "create_time": row["create_time"],
             "model_slug": row["model_slug"],
             "bgcolor": color
