@@ -76,10 +76,11 @@ html_template = Template("""
 <body>
   <h1>{{ title }}</h1>
   {% for block in content_blocks %}
-    <p><b>{{ block.role }}:</b></p>
     <div style="background-color: {{ block.bgcolor }}; padding: 1em; border-radius: 8px; margin-bottom: 2em;">
-      <p>{{ block.content | safe }}</p>
-      <sub>{{ block.create_time }} · {{ block.model_slug }}</sub>
+    <p><b>{{ block.role }}:</b>
+      {{ block.content | safe }}</p>
+
+      <sub>{{ block.create_time }} · {{ block.model_slug | default('', True) }}</sub>
     </div>
     <hr>
   {% endfor %}
